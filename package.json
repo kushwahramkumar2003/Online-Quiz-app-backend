@@ -5,8 +5,12 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon index.js",
-    "start": "nodemon index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "npm run install-deps && npm run pre-build && npm run post-build",
+    "install-deps": "npm install",
+    "pre-build": "echo 'Performing pre-build tasks...'",
+    "post-build": "echo 'Build completed.'"
   },
   "author": "Ramkumar kushwah",
   "license": "MIT",
