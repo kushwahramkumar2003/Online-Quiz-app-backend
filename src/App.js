@@ -16,7 +16,7 @@ app.use("/api/v1", routes);
 // });
 
 app.get("/", (req, res) => {
-  res.send("Happy new year!");
+  res.send("Hello world!");
 });
 
 module.exports = app;
