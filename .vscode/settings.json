@@ -1,0 +1,5 @@
+{
+  "appService.defaultWebAppToDeploy": "/subscriptions/12266183-a387-4499-ab78-eb68ce3cf68b/resourceGroups/test-01/providers/Microsoft.Web/sites/quiz-app-test-01",
+  "appService.deploySubpath": ".",
+  "appService.zipIgnorePattern": ["node_modules{,/**}", ".vscode{,/**}"]
+}
