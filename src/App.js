@@ -4,13 +4,13 @@ const app = express();
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 
-app.use(cors({ origin: "*" }));
-// app.use(
-//   cors({
-//     origin: "https://kushwahramkumar2003.github.io",
-//     credentials: true,
-//   })
-// );
+// app.use(cors({ origin: "*" }));
+app.use(
+  cors({
+    origin: "https://quiz-guard.netlify.app",
+    credentials: true,
+  })
+);
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
