@@ -5,6 +5,12 @@ const config = require("../config/index.js");
 
 // Middleware to check if user is authenticated
 const isAuthenticated = asyncHandler(async (req, res, next) => {
+  res.header(
+    "Access-Control-Allow-Origin",
+    "https://kushwahramkumar2003.github.io"
+  );
+  res.header("Access-Control-Allow-Credentials", true);
+  next();
   let token;
   console.log("req.cookies : ", req?.cookies);
   if (
@@ -39,6 +45,12 @@ const isAuthenticated = asyncHandler(async (req, res, next) => {
 
 // Middleware to check if user is an admin
 const isAdmin = (req, res, next) => {
+  res.header(
+    "Access-Control-Allow-Origin",
+    "https://kushwahramkumar2003.github.io"
+  );
+  res.header("Access-Control-Allow-Credentials", true);
+  next();
   // console.log("req.user : ", req);
   if (req.user && req.user.role === "ADMIN") {
     next();
