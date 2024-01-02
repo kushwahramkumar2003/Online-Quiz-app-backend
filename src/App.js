@@ -24,7 +24,7 @@ app.use(
       const isAllowed = allowedOrigins.includes(origin) || !origin;
       callback(null, isAllowed);
     },
-    credentials: true, // Set the credentials option to true
+    credentials: true, 
   })
 );
 
