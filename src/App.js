@@ -5,12 +5,29 @@ const cookieParser = require("cookie-parser");
 const cors = require("cors");
 
 // app.use(cors({ origin: "*" }));
+// app.use(
+//   cors({
+//     origin: "https://quiz-app-backend-cloud.azurewebsites.net",
+//     credentials: true,
+//   })
+// );
+
+const allowedOrigins = [
+  "http://localhost:3000",
+  "https://quiz-app-backend-cloud.azurewebsites.net",
+  "https://quiz-guard.netlify.app",
+];
+
 app.use(
   cors({
-    origin: "https://quiz-app-backend-cloud.azurewebsites.net",
-    credentials: true,
+    origin: function (origin, callback) {
+      // Check if the origin is in the allowedOrigins array or if it's a valid origin (e.g., for requests without an 'Origin' header)
+      const isAllowed = allowedOrigins.includes(origin) || !origin;
+      callback(null, isAllowed);
+    },
   })
 );
+
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
