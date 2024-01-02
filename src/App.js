@@ -21,10 +21,10 @@ const allowedOrigins = [
 app.use(
   cors({
     origin: function (origin, callback) {
-      // Check if the origin is in the allowedOrigins array or if it's a valid origin (e.g., for requests without an 'Origin' header)
       const isAllowed = allowedOrigins.includes(origin) || !origin;
       callback(null, isAllowed);
     },
+    credentials: true, // Set the credentials option to true
   })
 );
 
