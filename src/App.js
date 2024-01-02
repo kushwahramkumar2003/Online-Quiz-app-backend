@@ -22,7 +22,7 @@ app.use("/api/v1", routes);
 // });
 
 app.get("/", (req, res) => {
-  res.send("Happy new year!!!!");
+  res.send("Hello this is my home route!!!");
 });
 
 module.exports = app;
