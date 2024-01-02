@@ -77,6 +77,10 @@ exports.login = asyncHandler(async (req, res) => {
   // res.cookie("token", token, cookieOptions);
   res.cookie("token", token);
 
+  console.log("res : ", res);
+
+  console.log("Login token : ", token);
+
   user.password = undefined;
   res.user = user;
   res.status(200).json({
