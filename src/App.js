@@ -24,7 +24,7 @@ app.use(
       const isAllowed = allowedOrigins.includes(origin) || !origin;
       callback(null, isAllowed);
     },
-    credentials: true, 
+    credentials: true,
   })
 );
 
@@ -39,6 +39,7 @@ app.use("/api/v1", routes);
 // });
 
 app.get("/", (req, res) => {
+  console.log("Hello 2024!!!");
   res.send("Hello 2024!!!");
 });
 

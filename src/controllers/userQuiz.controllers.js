@@ -62,7 +62,7 @@ exports.startQuiz = async (req, res, quizData) => {
     return res.json(quizData);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Internal server error" });
+    res.status(500).json({ message: error.message, error });
   }
 };
 
@@ -88,7 +88,7 @@ exports.submitQuiz = async (req, res) => {
     res.json({ message: "Quiz submitted successfully" });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Internal server error" });
+    res.status(500).json({ message: error.message, error });
   }
 };
 
@@ -211,10 +211,10 @@ exports.finishQuiz = asyncHandler(async (req, res) => {
     percentageScore >= 75
       ? enm[3]
       : percentageScore >= 50
-        ? enm[2]
-        : percentageScore >= 25
-          ? enm[1]
-          : enm[0];
+      ? enm[2]
+      : percentageScore >= 25
+      ? enm[1]
+      : enm[0];
 
   // Save the result
 

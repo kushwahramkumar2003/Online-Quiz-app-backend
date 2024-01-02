@@ -11,6 +11,8 @@ const isAuthenticated = asyncHandler(async (req, res, next) => {
   // );
   // res.header("Access-Control-Allow-Credentials", true);
 
+  console.log("isAuthenticated called");
+
   let token;
   console.log("req.cookies : ", req?.cookies);
   if (
@@ -53,6 +55,7 @@ const isAdmin = (req, res, next) => {
 
   // console.log("req.user : ", req);
   if (req.user && req.user.role === "ADMIN") {
+    console.log("req.user : ", req.user);
     next();
   } else {
     console.log("Not authorized as an admin");

@@ -372,7 +372,7 @@ exports.getQuizResults = asyncHandler(async (req, res) => {
     res.status(200).json({ results });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({ message: error.message, error });
   }
 });
 
@@ -405,7 +405,7 @@ exports.updateUserAnswer = asyncHandler(async (req, res) => {
     res.status(200).json({ userAnswer });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({ message: error.message, error });
   }
 });
 
@@ -425,7 +425,7 @@ exports.getRemainingTime = asyncHandler(async (req, res) => {
     res.status(200).json({ remainingTime });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({ message: error.message, error });
   }
 });
 
@@ -458,7 +458,7 @@ exports.submitQuizOnTimeUp = asyncHandler(async (req, res) => {
     res.status(200).json({ message: "Quiz submitted successfully" });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({ message: error.message, error });
   }
 });
 
@@ -480,7 +480,7 @@ exports.getQuizResultsForUser = asyncHandler(async (req, res) => {
     res.status(200).json({ quizResults });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({ message: error.message, error });
   }
 });
 
@@ -502,7 +502,7 @@ exports.getAllResultsForQuiz = asyncHandler(async (req, res) => {
     res.status(200).json({ quizResults });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({ message: error.message, error });
   }
 });
 
@@ -521,7 +521,7 @@ exports.getQuizzesByUser = asyncHandler(async (req, res) => {
     res.status(200).json({ quizzes });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({ message: error.message, error });
   }
 });
 
@@ -541,7 +541,7 @@ exports.deleteQuizResultById = asyncHandler(async (req, res) => {
     res.status(200).json({ message: "Quiz result deleted successfully" });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({ message: error.message, error });
   }
 });
 
@@ -561,7 +561,7 @@ exports.deleteAllQuizResults = asyncHandler(async (req, res) => {
     res.status(200).json({ message: "All quiz results deleted successfully" });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({ message: error.message, error });
   }
 });
 
