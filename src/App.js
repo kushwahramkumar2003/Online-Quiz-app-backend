@@ -7,7 +7,7 @@ const cors = require("cors");
 // app.use(cors({ origin: "*" }));
 app.use(
   cors({
-    origin: "https://quiz-guard.netlify.app",
+    origin: "https://quiz-app-backend-cloud.azurewebsites.net",
     credentials: true,
   })
 );
@@ -22,7 +22,7 @@ app.use("/api/v1", routes);
 // });
 
 app.get("/", (req, res) => {
-  res.send("Hello this is my home route!!!");
+  res.send("Hello 2024!!!");
 });
 
 module.exports = app;
