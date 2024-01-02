@@ -47,10 +47,10 @@ exports.signup = asyncHandler(async (req, res) => {
 
 // Login controller
 exports.login = asyncHandler(async (req, res) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
-  }
+  // const errors = validationResult(req);
+  // if (!errors.isEmpty()) {
+  //   return res.status(400).json({ errors: errors.array() });
+  // }
 
   const { email, password } = req.body;
 
@@ -74,7 +74,8 @@ exports.login = asyncHandler(async (req, res) => {
   const token = user.generateToken();
   user.token = token;
 
-  res.cookie("token", token, cookieOptions);
+  // res.cookie("token", token, cookieOptions);
+  res.cookie("token", token);
 
   user.password = undefined;
   res.user = user;
