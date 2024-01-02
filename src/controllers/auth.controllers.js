@@ -10,6 +10,8 @@ const config = require("../config/index.js");
 const cookieOptions = {
   expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
   httpOnly: true,
+  sameSite: "none",
+  secure: true,
 };
 
 // Signup controller
@@ -74,8 +76,8 @@ exports.login = asyncHandler(async (req, res) => {
   const token = user.generateToken();
   user.token = token;
 
-  // res.cookie("token", token, cookieOptions);
-  res.cookie("token", token);
+  res.cookie("token", token, cookieOptions);
+  // res.cookie("token", token);
 
   console.log("res : ", res);
 
