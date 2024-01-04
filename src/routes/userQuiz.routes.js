@@ -16,7 +16,7 @@ const {
 } = require("../middlewares/auth.middlewares.js");
 
 // router.get("/:quizId/start", startQuiz);
-router.post("/:quizId/submit", submitQuiz);
+// router.post("/:quizId/submit", submitQuiz);
 router.post("/submitAnswer", submitAnswer);
 router.post("/:quizId/finishQuiz", finishQuiz);
 router.get("/:quizId", getQuizByIdForUser);
