@@ -1,4 +1,5 @@
 const express = require("express");
+const fileUpload = require("express-fileupload");
 const routes = require("./routes/index.routes.js");
 const app = express();
 const cookieParser = require("cookie-parser");
@@ -27,7 +28,12 @@ app.use(
     credentials: true,
   })
 );
-
+app.use(
+  fileUpload({
+    useTempFiles: true,
+    tempFileDir: "/tmp/",
+  })
+);
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));

@@ -98,72 +98,54 @@ exports.logout = asyncHandler(async (req, res) => {
   res.json({ msg: "Logged out successfully" });
 });
 
-// Request password reset controller
-exports.requestPasswordReset = asyncHandler(async (req, res) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
-  }
-
-  const { email } = req.body;
-
-  let user = await User.findOne({ email });
-
+exports.getAdminDetails = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user._id);
   if (!user) {
-    return res.status(400).json({ msg: "User not found" });
+    return res.status(404).json({
+      success: false,
+      message: "User not found",
+    });
   }
 
-  const payload = {
-    user: {
-      id: user.id,
-    },
-  };
-
-  jwt.sign(
-    payload,
-    process.env.JWT_SECRET,
-    { expiresIn: "10m" },
-    async (err, token) => {
-      if (err) throw err;
-
-      user.resetPasswordToken = token;
-      user.resetPasswordExpires = Date.now() + 600000; // 10 minutes
-
-      await user.save();
-
-      // Send email with reset link
-      // ...
-
-      res.json({ msg: "Password reset link sent to email" });
-    }
-  );
+  res.json({
+    success: true,
+    _id: user._id,
+    avatar: user.avatar,
+    name: user.name,
+    email: user.email,
+    role: user.role,
+  });
 });
 
-// Reset password controller
-exports.resetPassword = asyncHandler(async (req, res) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
-  }
-
-  const { password } = req.body;
-  const { token } = req.params;
-
-  let user = await User.findOne({
-    resetPasswordToken: token,
-    resetPasswordExpires: { $gt: Date.now() },
-  });
-
+exports.updateAdminDetails = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user._id);
   if (!user) {
-    return res.status(400).json({ msg: "Invalid or expired token" });
+    return res.status(404).json({
+      success: false,
+      message: "User not found",
+    });
   }
 
-  const salt = await bcrypt.genSalt(10);
-  user.password = await bcrypt.hash(password, salt);
-  user.resetPasswordToken = null;
-  user.resetPasswordExpires = null;
+  user.name = req.body.name || user.name;
+  user.email = req.body.email || user.email;
+  user.role = req.body.role || user.role;
 
-  await user.save();
+  if (req.body.password && req.body.password.length < 6) {
+    res.status(400).json({
+      success: false,
+      message: "Password should be minimum 6 characters",
+    });
+    return;
+  } else if (req.body.password) {
+    user.password = req.body.password;
+  }
 
-  res.json({ msg: "Password reset successful" });
+  const updatedUser = await user.save();
+
+  updatedUser.password = undefined;
+
+  res.status(200).json({
+    success: true,
+    user: updatedUser,
+  });
 });

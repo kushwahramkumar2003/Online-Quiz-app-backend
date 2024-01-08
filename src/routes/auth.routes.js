@@ -7,6 +7,8 @@ const {
   logout,
   requestPasswordReset,
   resetPassword,
+  getAdminDetails,
+  updateAdminDetails,
 } = require("../controllers/auth.controllers.js");
 
 const {
@@ -23,10 +25,8 @@ routes.post("/login", login);
 // Logout the user
 routes.get("/logout", isAuthenticated, logout);
 
-// Request password reset
-routes.post("/reset-password", requestPasswordReset);
+routes.get("/getAdminDetails", isAuthenticated, isAdmin, getAdminDetails);
 
-// Reset password with token
-routes.post("/reset-password/:token", resetPassword);
+routes.put("/updateAdminDetails", isAuthenticated, isAdmin, updateAdminDetails);
 
 module.exports = routes;

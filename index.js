@@ -1,6 +1,7 @@
 const app = require("./src/App.js"); //import app
 const config = require("./src/config/index.js"); //import config
 const connect = require("./src/services/connectDB.js"); //import connect
+const cloudnairyconnect = require("./src/services/cloudinary.js");
 
 //create a method
 
@@ -9,6 +10,7 @@ const connect = require("./src/services/connectDB.js"); //import connect
 (async () => {
   try {
     await connect(); //connect to DB
+    await cloudnairyconnect();
 
     app.on("error", (err) => {
       // error handling
