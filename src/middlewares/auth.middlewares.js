@@ -21,7 +21,7 @@ const isAuthenticated = asyncHandler(async (req, res, next) => {
       req.headers.authorization.startsWith("Bearer"))
   ) {
     try {
-      // console.log("req.cookies.token ", req.cookies.token);
+      console.log("req.cookies.token ", req.cookies.token);
       token = req.cookies.token || req.headers.authorization.split(" ")[1];
 
       // console.log("token : ", token);
@@ -39,7 +39,7 @@ const isAuthenticated = asyncHandler(async (req, res, next) => {
   }
 
   if (!token) {
-    // console.log("Not authorized, no token");
+    console.log("Not authorized, no token");
     res.status(401);
     throw new Error("Not authorized, no token");
   }
