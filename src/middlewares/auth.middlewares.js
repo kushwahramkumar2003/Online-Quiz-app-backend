@@ -14,7 +14,7 @@ const isAuthenticated = asyncHandler(async (req, res, next) => {
   // console.log("isAuthenticated called");
 
   let token;
-  // console.log("req.cookies : ", req?.cookies);
+  console.log("req.cookies : ", req?.cookies);
   if (
     req.cookies.token ||
     (req.headers.authorization &&
