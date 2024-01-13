@@ -14,7 +14,7 @@ const isAuthenticated = asyncHandler(async (req, res, next) => {
   // console.log("isAuthenticated called");
 
   let token;
-  console.log("req.cookies : ", req?.cookies);
+  // console.log("req.cookies : ", req?.cookies);
   if (
     req.cookies.token ||
     (req.headers.authorization &&
@@ -24,14 +24,15 @@ const isAuthenticated = asyncHandler(async (req, res, next) => {
       console.log("req.cookies.token ", req.cookies.token);
       token = req.cookies.token || req.headers.authorization.split(" ")[1];
 
-      // console.log("token : ", token);
-      const decoded = jwt.verify(token, config.JWT_SECRET);
-      // console.log("decoded : ", decoded);
+      console.log("Extracted token : ", token);
+      const decoded = await jwt.verify(token, config.JWT_SECRET);
+      console.log("decoded : ", decoded);
       req.user = await User.findById(decoded._id).select("-password");
       // console.log("req.user : ", req.user);
       next();
     } catch (error) {
-      // console.error(error);
+      console.error(error);
+      console.log("Error message : ", error.message);
       console.log("Not authorized, token failed");
       res.status(401);
       throw new Error("Not authorized, token failed");
