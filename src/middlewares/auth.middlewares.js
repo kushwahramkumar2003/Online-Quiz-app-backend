@@ -14,34 +14,34 @@ const isAuthenticated = asyncHandler(async (req, res, next) => {
   // console.log("isAuthenticated called");
 
   let token;
-  console.log("req.cookies : ", req?.cookies);
-  console.log("req.cookies.token : ", req?.cookies?.token);
+  // console.log("req.cookies : ", req?.cookies);
+  // console.log("req.cookies.token : ", req?.cookies?.token);
   if (
     req.cookies.token ||
     (req.headers.authorization &&
       req.headers.authorization.startsWith("Bearer"))
   ) {
     try {
-      console.log("req.cookies.token ", req.cookies.token);
+      // console.log("req.cookies.token ", req.cookies.token);
       token = req.cookies.token || req.headers.authorization.split(" ")[1];
 
-      console.log("Extracted token : ", token);
+      // console.log("Extracted token : ", token);
       const decoded = await jwt.verify(token, config.JWT_SECRET);
-      console.log("decoded : ", decoded);
+      // console.log("decoded : ", decoded);
       req.user = await User.findById(decoded._id).select("-password");
       // console.log("req.user : ", req.user);
       next();
     } catch (error) {
       console.error(error);
-      console.log("Error message : ", error.message);
-      console.log("Not authorized, token failed");
+      // console.log("Error message : ", error.message);
+      // console.log("Not authorized, token failed");
       res.status(401);
       throw new Error("Not authorized, token failed");
     }
   }
 
   if (!token) {
-    console.log("Not authorized, no token");
+    // console.log("Not authorized, no token");
     res.status(401);
     throw new Error("Not authorized, no token");
   }

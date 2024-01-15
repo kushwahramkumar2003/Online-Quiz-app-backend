@@ -9,11 +9,50 @@ const profileSchema = new mongoose.Schema({
     type: String,
     trim: true,
   },
-  avatar: {
+  Birthday: {
+    type: Date,
+  },
+  Phone: {
     type: String,
-    default: "default_avatar_url.jpg", // Set a default avatar image
     trim: true,
   },
+  Address: {
+    type: String,
+    trim: true,
+  },
+  City: {
+    type: String,
+    trim: true,
+  },
+  State: {
+    type: String,
+    trim: true,
+  },
+  Zip: {
+    type: String,
+    trim: true,
+  },
+  Country: {
+    type: String,
+    trim: true,
+  },
+  Institute: {
+    type: String,
+    trim: true,
+  },
+  Education: {
+    type: String,
+    trim: true,
+  },
+  Skills: {
+    type: String,
+    trim: true,
+  },
+  Languages: {
+    type: String,
+    trim: true,
+  },
+
 });
 
 // Delete the user before deleting the profile
@@ -29,13 +68,6 @@ profileSchema.post("save", function (doc, next) {
   next();
 });
 
-// Get the full name of the user
-profileSchema.methods.getFullName = async function () {
-  const profile = this;
-  const user = await User.findById(profile.user);
-  return user.name;
-};
-
 // Find the profile by user id
 profileSchema.statics.findByUserId = async function (user) {
   const profile = await Profile.findOne({ user });
@@ -43,3 +75,5 @@ profileSchema.statics.findByUserId = async function (user) {
 };
 
 const Profile = mongoose.model("Profile", profileSchema);
+
+module.exports = Profile;

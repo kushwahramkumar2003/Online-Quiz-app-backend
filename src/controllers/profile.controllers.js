@@ -8,25 +8,88 @@ const config = require("../config/index.js");
 // @route   GET /api/profile
 // @access  Private
 exports.getProfile = asyncHandler(async (req, res) => {
-  const profile = await Profile.findOne({ user: req.user._id });
-  if (!profile) {
-    return res.status(404).json({ message: "Profile not found" });
+  const user = await User.findById(req.user._id).select("-password");
+
+  if (!user) {
+    return res.status(404).json({
+      success: false,
+      message: "User not found",
+    });
   }
-  res.json(profile);
+
+  let profile = await Profile.findOne({ user: req.user._id });
+  if (!profile) {
+    profile = await Profile.create({
+      user: req.user._id,
+      bio: "",
+      Birthday: "",
+      Phone: "",
+      Address: "",
+      City: "",
+      State: "",
+      Zip: "",
+      Country: "",
+      Institute: "",
+      Education: "",
+      Skills: "",
+      Languages: "",
+    });
+
+    await profile.save();
+  }
+
+  res.status(200).json({
+    success: true,
+    name: user.name,
+    email: user.email,
+    avatar: user.avatar,
+    bio: profile.bio,
+    Birthday: profile.Birthday,
+    Phone: profile.Phone,
+    Address: profile.Address,
+    City: profile.City,
+    State: profile.State,
+    Zip: profile.Zip,
+    Country: profile.Country,
+    Institute: profile.Institute,
+    Education: profile.Education,
+    Skills: profile.Skills,
+    Languages: profile.Languages,
+  });
 });
 
 // @desc    Update user profile
 // @route   PUT /api/profile
 // @access  Private
 exports.updateProfile = asyncHandler(async (req, res) => {
+  console.log("Update profile called");
+
+  console.log("req.body : ", req.body);
+
   const profile = await Profile.findOne({ user: req.user._id });
   if (!profile) {
     return res.status(404).json({ message: "Profile not found" });
   }
-  profile.name = req.body.name || profile.name;
-  profile.email = req.body.email || profile.email;
+  // profile.name = req.body.name || profile.name;
+  // profile.email = req.body.email || profile.email;
+
   profile.bio = req.body.bio || profile.bio;
-  const updatedProfile = await profile.save();
+  profile.Birthday = req.body.Birthday || profile.Birthday;
+  profile.Phone = req.body.Phone || profile.Phone;
+  profile.Address = req.body.Address || profile.Address;
+  profile.City = req.body.City || profile.City;
+  profile.State = req.body.State || profile.State;
+  profile.Zip = req.body.Zip || profile.Zip;
+  profile.Country = req.body.Country || profile.Country;
+  profile.Institute = req.body.Institute || profile.Institute;
+  profile.Education = req.body.Education || profile.Education;
+  profile.Skills = req.body.Skills || profile.Skills;
+  profile.Languages = req.body.Languages || profile.Languages;
+
+  const updatedProfile = await profile.save({ new: true });
+
+  console.log("updatedProfile : ", updatedProfile);
+
   res.json(updatedProfile);
 });
 
