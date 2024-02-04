@@ -1,0 +1,9 @@
+version: "3.8"
+
+services:
+  mongodb:
+    image: mongo # hub.docker.com
+    ports:
+      - "27017:27017"
+    environment:
+      MONGODB_URL: mongodb://localhost:27017/quiz-app
