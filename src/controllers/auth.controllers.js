@@ -58,7 +58,7 @@ exports.login = asyncHandler(async (req, res) => {
 
   let user = await User.findOne(
     { email },
-    { email: 1, password: 1, name: 1, role: 1 }
+    { email: 1, password: 1, name: 1, role: 1, avatar: 1 }
   );
   // console.log("user", user);
   if (!user) {

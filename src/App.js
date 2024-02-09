@@ -5,14 +5,6 @@ const app = express();
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 
-// app.use(cors({ origin: "*" }));
-// app.use(
-//   cors({
-//     origin: "https://quiz-app-backend-cloud.azurewebsites.net",
-//     credentials: true,
-//   })
-// );
-
 const allowedOrigins = [
   "http://localhost:5173",
   "http://localhost:3000",
@@ -46,10 +38,6 @@ app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 
 app.use("/api/v1", routes);
-
-// app.use("*", (req, res) => {
-//   res.status(404).json({ error: "not found" });
-// });
 
 app.get("/", (req, res) => {
   console.log("Hello 2024!!!");
