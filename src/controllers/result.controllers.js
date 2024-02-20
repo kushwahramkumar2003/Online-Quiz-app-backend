@@ -1,13 +1,7 @@
 const asyncHandler = require("./../services/asyncHandler.js");
 const Result = require("./../models/Result.model.js");
 
-// @desc    Get all results
-// @route   GET /api/results
-// @access  Public
-exports.getAllResults = asyncHandler(async (req, res) => {
-  const results = await Result.find({});
-  res.json(results);
-});
+
 
 // @desc    Get result by ID
 // @route   GET /api/results/:id
@@ -19,4 +13,12 @@ exports.getResultById = asyncHandler(async (req, res) => {
     throw new Error("Result not found");
   }
   res.json(result);
+});
+
+exports.getAllUserResults = asyncHandler(async (req, res) => {
+  const user = req.user;
+  const results = await Result.find({ user: user._id });
+  console.log(results);
+
+  res.json(results);
 });

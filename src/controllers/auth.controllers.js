@@ -1,11 +1,6 @@
 const asyncHandler = require("./../services/asyncHandler.js");
 const User = require("../models/User.model.js");
 const { validationResult } = require("express-validator");
-// const bcrypt = require("bcrypt");
-const bcrypt = require("bcryptjs");
-// const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
-const config = require("../config/index.js");
 
 const cookieOptions = {
   expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
@@ -14,7 +9,12 @@ const cookieOptions = {
   secure: true,
 };
 
-// Signup controller
+/********************************
+ * @desc    Register a new user
+ * @route   POST /api/auth/signup
+ * @access  Public
+ * @param   {String} name
+ *********************************/
 exports.signup = asyncHandler(async (req, res) => {
   console.log("req.body", req.body);
   const errors = validationResult(req);
@@ -47,13 +47,15 @@ exports.signup = asyncHandler(async (req, res) => {
   });
 });
 
-// Login controller
+/***************************************
+ * @desc    Login user
+ * @route   POST /api/auth/login
+ * @access  Public
+ * @param   {String} email
+ * @param   {String} password
+ * @returns {Object} User
+ ***************************************/
 exports.login = asyncHandler(async (req, res) => {
-  // const errors = validationResult(req);
-  // if (!errors.isEmpty()) {
-  //   return res.status(400).json({ errors: errors.array() });
-  // }
-
   const { email, password } = req.body;
 
   let user = await User.findOne(
@@ -92,11 +94,23 @@ exports.login = asyncHandler(async (req, res) => {
   });
 });
 
-// Logout controller
+/**************************************
+ * @desc    Logout user
+ * @route   GET /api/auth/logout
+ * @access  Private
+ * @returns {Object} Message
+ **************************************/
 exports.logout = asyncHandler(async (req, res) => {
   res.clearCookie("token");
   res.json({ msg: "Logged out successfully" });
 });
+
+/**************************************
+ * @desc    Get user details
+ * @route   GET /api/auth/me
+ * @access  Private
+ * @returns {Object} User
+ * **************************************/
 
 exports.getAdminDetails = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id);
@@ -117,6 +131,15 @@ exports.getAdminDetails = asyncHandler(async (req, res) => {
   });
 });
 
+/**************************************
+ * @desc    Update user details
+ * @route   PUT /api/auth/me
+ * @access  Private
+ * @param   {String} name
+ * @param   {String} email
+ * @param   {String} password
+ * @returns {Object} User
+ * **************************************/
 exports.updateAdminDetails = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id);
   if (!user) {
