@@ -12,25 +12,19 @@ const allowedOrigins = [
   "https://quiz-guard.netlify.app",
 ];
 
-// app.use(
-//   cors({
-//     origin: function (origin, callback) {
-//       const isAllowed = allowedOrigins.includes(origin) || !origin;
-//       callback(null, isAllowed);
-//     },
-//     credentials: true,
-//     exposedHeaders: [
-//       "set-cookie",
-//       "Content-Disposition",
-//       "Content-Type",
-//       "Content-Length",
-//     ],
-//   })
-// );
-
 app.use(
   cors({
-    origin: "*",
+    origin: function (origin, callback) {
+      const isAllowed = allowedOrigins.includes(origin) || !origin;
+      callback(null, isAllowed);
+    },
+    credentials: true,
+    exposedHeaders: [
+      "set-cookie",
+      "Content-Disposition",
+      "Content-Type",
+      "Content-Length",
+    ],
   })
 );
 
